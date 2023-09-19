@@ -10,8 +10,17 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: [
+    'dist',
+    '.eslintrc.cjs',
+    '*.module.css.d.ts'
+  ],
   parser: '@typescript-eslint/parser',
+  settings: {
+    "react": {
+      "version": "detect",
+    },
+  },
   plugins: [
     'react-refresh',
     'react',
@@ -97,5 +106,24 @@ module.exports = {
         "beforeSelfClosing": "always",
       },
     ],
+    "react/jsx-max-props-per-line": [
+      "warn",
+      {
+        "maximum": 1,
+      },
+    ],
+    "react/jsx-closing-bracket-location": [
+      "error",
+      {
+        "nonEmpty": "tag-aligned",
+      },
+    ],
+    "react/jsx-tag-spacing": [
+      "warn",
+      {
+        "beforeSelfClosing": "always",
+      },
+    ],
+    "space-before-blocks": "warn",
   },
 }

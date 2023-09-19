@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import viteLogo from '/vite.svg'
 import svgExample from '@/assets/example.svg'
 import styles from './ExamplePage.module.css'
@@ -14,14 +14,21 @@ const ExamplePage = () => {
             </div>
 
             <div>
-                <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-                    <img src={viteLogo} className={styles['logo']} alt="Vite logo" />
+                <a href="https://vitejs.dev"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <img src={viteLogo}
+                        className={styles['logo']}
+                        alt="Vite logo"
+                    />
                 </a>
 
                 <a
                     href="https://react.dev"
                     target="_blank"
-                    rel="noreferrer">
+                    rel="noreferrer"
+                >
                     <img
                         src={svgExample}
                         className={clsx(styles['logo'], styles['react'])}
