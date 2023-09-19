@@ -28,9 +28,13 @@
   
   .card {
     padding: 2em;
+    color: red;
   }
   
   .read-the-docs {
     color: #888;
   }
   
+.moduleChecker {
+  background-color: blue
+}

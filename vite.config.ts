@@ -7,4 +7,9 @@ export default defineConfig({
     resolve: {
         alias: [{ find: '@', replacement: '/src' }],
     },
+    css: {
+        modules: {
+            localsConvention: 'camelCase'
+        }
+    }
 })

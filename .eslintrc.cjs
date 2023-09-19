@@ -1,6 +1,9 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es2020: true
+  },
   extends: [
     'eslint:recommended',
     "plugin:react/recommended",
@@ -17,6 +20,7 @@ module.exports = {
     'import-newlines'
   ],
   rules: {
+    "react/react-in-jsx-scope": "off",
     "block-spacing": ["warn"],
     "comma-spacing": ["warn"],
     'react-refresh/only-export-components': [
