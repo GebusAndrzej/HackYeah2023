@@ -9,7 +9,13 @@ module.exports = {
     "plugin:react/recommended",
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:react/jsx-runtime',
   ],
+  compilerOptions: {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true
+  },
   ignorePatterns: [
     'dist',
     '.eslintrc.cjs',

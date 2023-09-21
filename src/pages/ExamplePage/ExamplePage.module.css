@@ -1,3 +1,15 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: auto;
+  max-width: 500px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  min-height: 100dvh;
+}
+
 .logo {
     height: 6em;
     padding: 1.5em;
@@ -28,13 +40,11 @@
   
   .card {
     padding: 2em;
-    color: red;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   
   .read-the-docs {
     color: #888;
   }
-  
-.moduleChecker {
-  background-color: blue
-}

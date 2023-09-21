@@ -6,10 +6,15 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "baseUrl": "src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "paths": {
       "@/assets/*": ["assets/*"],
       "@/pages/*": ["pages/*"],
+      "@/services/*": ["services/*"],
+      "@/http/*": ["http/*"],
+      "@/types/*": ["types/*"],
     },
 
     /* Bundler mode */

@@ -1,18 +1,34 @@
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import viteLogo from '/vite.svg'
 import svgExample from '@/assets/example.svg'
 import styles from './ExamplePage.module.css'
 import clsx from 'clsx'
+import { ExampleService } from '@/services/ExampleService'
+import { IPost } from '@/types/example'
 
 const ExamplePage = () => {
     const [count, setCount] = useState(0)
+    const [post, setPost] = useState<IPost>();
+
+    const exampleService = useMemo(
+        () => new ExampleService(),
+        []
+    )
+
+    const fetchPosts = useCallback(
+        () => {
+            setPost(undefined);
+
+            exampleService
+                .getPosts()
+                .then(setPost)
+        },
+        []
+    )
+    
 
     return (
-        <>
-            <div className={styles.moduleChecker}>
-                module checker in ExamplePage
-            </div>
-
+        <div className={styles.wrapper}>
             <div>
                 <a href="https://vitejs.dev"
                     target="_blank"
@@ -44,15 +60,15 @@ const ExamplePage = () => {
                     count is {count}
                 </button>
 
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
+                <button onClick={fetchPosts}>
+                    Click to send request
+                </button>
             </div>
 
-            <p className={styles['read-the-docs']}>
-                Click on the Vite and React logos to learn more
-            </p>
-        </>
+            <pre className={styles['read-the-docs']}>
+                {JSON.stringify(post, null, 4)}
+            </pre>
+        </div>
     )
 }
 
