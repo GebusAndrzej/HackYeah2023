@@ -23,3 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 *.module.css.d.ts
+*.css.d.ts

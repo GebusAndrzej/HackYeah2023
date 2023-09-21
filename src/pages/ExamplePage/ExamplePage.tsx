@@ -20,7 +20,7 @@ const ExamplePage = () => {
             setPost(undefined);
 
             exampleService
-                .getPosts()
+                .getPost()
                 .then(setPost)
         },
         []

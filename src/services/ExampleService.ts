@@ -11,7 +11,7 @@ export class ExampleService {
         console.log('Example service created')
     }
 
-    getPosts = () => 
+    getPost = () => 
         this.http
             .get<IPost>('https://jsonplaceholder.typicode.com/todos/1')
             .then(response => response.data)
