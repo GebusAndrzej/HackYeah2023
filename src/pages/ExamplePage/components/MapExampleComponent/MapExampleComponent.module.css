@@ -1,0 +1,7 @@
+.wrapper {
+    width: 500px;
+    height: 500px;
+    display: block;
+    position: relative;
+    background-color: rgba(229, 0, 0, 0.22);
+}

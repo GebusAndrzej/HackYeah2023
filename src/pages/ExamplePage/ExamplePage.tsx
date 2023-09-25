@@ -5,6 +5,7 @@ import styles from './ExamplePage.module.css'
 import clsx from 'clsx'
 import { ExampleService } from '@/services/ExampleService'
 import { IPost } from '@/types/example'
+import MapExampleComponent from './components/MapExampleComponent/MapExampleComponent'
 
 const ExamplePage = () => {
     const [count, setCount] = useState(0)
@@ -29,6 +30,8 @@ const ExamplePage = () => {
 
     return (
         <div className={styles.wrapper}>
+            <MapExampleComponent />
+            
             <div>
                 <a href="https://vitejs.dev"
                     target="_blank"
