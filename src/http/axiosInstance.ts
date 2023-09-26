@@ -9,7 +9,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-        config.headers.Authorization = 'Bearer <example>'
+        // config.headers.Authorization = 'Bearer <example>'
 
         return config;
     },

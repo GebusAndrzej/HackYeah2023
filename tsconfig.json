@@ -15,6 +15,7 @@
       "@/services/*": ["services/*"],
       "@/http/*": ["http/*"],
       "@/types/*": ["types/*"],
+      "@/helpers/*": ["helpers/*"],
     },
 
     /* Bundler mode */
