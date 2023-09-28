@@ -3,13 +3,30 @@ import styles from './MapExampleComponent.module.css'
 import MapHandlerExample from './components/MapHandlerExample/MapHandlerExample'
 import { point } from '../../utils/consts'
 import { untracked } from '@preact/signals-react'
+import {db} from '@/firebaseconfig/config'
+import { useCallback } from 'react'
+import { addDoc, collection } from 'firebase/firestore'
 
 type Props = {}
+
+async function add([x,y]: number[]) {
+    try {
+        const docRef = await addDoc(collection(db, "points"), {
+          x: x,
+          y: y,
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+}
 
 const MapExampleComponent = (props: Props) => {
 
     untracked(() => {
         console.log("Observerd change in point: ", point.value)
+
+        add(point.value)
     })
     
   return (

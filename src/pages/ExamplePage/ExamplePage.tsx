@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import viteLogo from '/vite.svg'
 import svgExample from '@/assets/example.svg'
 import styles from './ExamplePage.module.css'
@@ -6,6 +6,8 @@ import clsx from 'clsx'
 import { ExampleService } from '@/services/ExampleService'
 import { IPost } from '@/types/example'
 import MapExampleComponent from './components/MapExampleComponent/MapExampleComponent'
+import {db, app} from '@/firebaseconfig/config'
+import { Firestore, collection, getDocs } from 'firebase/firestore'
 
 const ExamplePage = () => {
     const [count, setCount] = useState(0)
@@ -23,6 +25,20 @@ const ExamplePage = () => {
             exampleService
                 .getPost()
                 .then(setPost)
+        },
+        []
+    )
+
+    async function getCities(db: Firestore) {
+        const pointsCollection = collection(db, 'points');
+        const pointsSnapshot = await getDocs(pointsCollection);
+        const pointsList = pointsSnapshot.docs.map(doc => doc.data());
+        return pointsList;
+      }
+    
+    useEffect(
+        () => {
+            getCities(db).then(console.log)
         },
         []
     )

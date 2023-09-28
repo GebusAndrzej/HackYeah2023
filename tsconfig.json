@@ -16,6 +16,7 @@
       "@/http/*": ["http/*"],
       "@/types/*": ["types/*"],
       "@/helpers/*": ["helpers/*"],
+      "@/firebaseconfig/*": ["firebaseconfig/*"],
     },
 
     /* Bundler mode */
