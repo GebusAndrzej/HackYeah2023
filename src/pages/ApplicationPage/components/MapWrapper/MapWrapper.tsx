@@ -31,7 +31,7 @@ const MapWrapper = () => {
     const fetchExistingMarkers = useCallback(
         () => {
             backendService
-                .getMarkers()
+                .getAllReports()
                 .then(setMarkers)
         },
         [backendService]
@@ -69,8 +69,8 @@ const MapWrapper = () => {
                     />
                     {appState.value === APP_STATE.VIEW && markers.map(marker => (
                         <Marker
-                            position={[marker.lat, marker.lng]}
-                            key={marker.title}
+                            position={[marker.localization.latitude, marker.localization.longitude]}
+                            key={marker.eventId}
                         >
                             <Popup>
                                 <ReportPopup report={marker} />

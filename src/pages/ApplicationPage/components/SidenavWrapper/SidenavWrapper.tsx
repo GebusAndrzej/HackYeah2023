@@ -2,7 +2,8 @@ import styles from './SidenavWrapper.module.css';
 import {
     APP_STATE,
     LastTrackedPointProvider,
-    appState
+    appState,
+    mapElementState
 } from '../../utils/state'
 import { projectLatLngToGUGIK } from '@/helpers/projectionHelpers';
 import { GugikService } from '@/services/GugikService';
@@ -19,10 +20,13 @@ const SidenavWrapper = () => {
     const handleCloseModal = useCallback(
         () => {
             appState.value = APP_STATE.VIEW
+            setTimeout(() => {
+                mapElementState.value?.invalidateSize()
+            }, 500)
         },
         [],
     )
-    const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
+    const [gugikLocation, setGugikLocation] = useState<Plot | undefined>();
     const [telephone, setTelephone] = useState('');
     const [animalPicture, setAnimalPicture] = useState<File | null>(null);
     const [name, setName] = useState('');

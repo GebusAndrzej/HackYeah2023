@@ -1,9 +1,10 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import styles from './ApplicationPage.module.css'
 import MapWrapper from './components/MapWrapper/MapWrapper'
 import {
     APP_STATE,
-    appState
+    appState,
+    mapElementState
 } from './utils/state'
 import SidenavWrapper from './components/SidenavWrapper/SidenavWrapper'
 
@@ -11,6 +12,9 @@ const ApplicationPage = () => {
     const handleChangeState = useCallback(
         () => {
             appState.value = APP_STATE.ADD
+            setTimeout(() => {
+                mapElementState.value?.invalidateSize()
+            }, 500)
         },
         []
     )
