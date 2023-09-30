@@ -17,6 +17,7 @@ export function getMapCenterLocation(): LatLng | null {
     const map = mapElementState.value;
 
     if (!map) {
+        console.log("map is null")
         return null;
     }
 
@@ -27,6 +28,7 @@ export function addOnDragEndListener(callback: () => void) {
     const map = mapElementState.value;
 
     if (!map) {
+        console.log("map is null")
         return;
     }
 
@@ -37,8 +39,9 @@ export function addOnDragStartListener(callback: () => void) {
     const map = mapElementState.value;
 
     if (!map) {
+        console.log("map is null")
         return;
     }
 
     map.addEventListener('dragstart', callback)
-} 
+}
