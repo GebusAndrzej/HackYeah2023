@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { BackendService } from '@/services/BackendService'
 import { IReport } from '@/types/Report'
 import { marker } from 'leaflet'
+import ReportPopup from './components/ReportPopup/ReportPopup'
 
 type Props = {}
 
@@ -47,7 +48,7 @@ const MapWrapper = (props: Props) => {
                       key={marker.title}
                     >
                         <Popup>
-                          {marker.title}
+                          <ReportPopup report={marker} />
                         </Popup>
                     </Marker>
                   ))}
