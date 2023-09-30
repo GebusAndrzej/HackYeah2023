@@ -16,12 +16,21 @@ const ApplicationPage = () => {
     <div className={styles.wrapper}>
       <MapWrapper />
     
-      {appState.value === APP_STATE.VIEW && (
+      {appState.value === APP_STATE.ADD && (
         <SidenavWrapper />
-        // <button onClick={handleChangeState} className={styles.addButton}>
-        //     Dodaj elooo
-        // </button>
+       
       )}
+
+
+       
+{appState.value === APP_STATE.VIEW && (
+       
+         <button onClick={handleChangeState} className={styles.addButton}>
+            Dodaj zwierza mordo
+        </button>
+      )}
+
+      
     </div>
   )
 }
