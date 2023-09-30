@@ -20,6 +20,7 @@ import {
 } from '../../utils/state'
 import { MapController } from './components/MapController'
 import { LatLng } from 'leaflet'
+import clsx from 'clsx'
 
 const MapWrapper = () => {
     const backendService = useMemo(() => new BackendService(), [])
@@ -43,18 +44,28 @@ const MapWrapper = () => {
         [fetchExistingMarkers]
     )
 
+    useEffect(
+        () => {
+            fetchExistingMarkers()
+        },
+        [fetchExistingMarkers]
+    )
+
     return (
         <>
-            <div className={styles.wrapper}>
+            <div className={clsx(
+                styles.wrapper,
+                appState.value == APP_STATE.ADD && styles.shrink
+            )}
+            >
                 <MapContainer
                     center={[50.0410866, 21.9991853]}
                     zoom={13}
+                    dragging
                 >
                     <TileLayer
-                        // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    // url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-                    // url='https://miip.geomalopolska.pl/arcgis/rest/services/MIIP_Orto2023/MapServer/tile/{z}/{y}/{x}'
                     />
                     {appState.value === APP_STATE.VIEW && markers.map(marker => (
                         <Marker

@@ -16,14 +16,16 @@ import { Plot } from '@/types/Plot';
 
 const SidenavWrapper = () => {
     const service = useMemo(() => new GugikService(), []);
-    const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
-
     const handleCloseModal = useCallback(
         () => {
             appState.value = APP_STATE.VIEW
         },
         [],
     )
+    const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
+    const [telephone, setTelephone] = useState('');
+    const [animalPicture, setAnimalPicture] = useState<File | null>(null);
+    const [name, setName] = useState('');
 
     useEffect(() => {
         LastTrackedPointProvider.getInstance().addListener((location) => {
@@ -33,11 +35,13 @@ const SidenavWrapper = () => {
                 .getPlotByXY({ x, y })
                 .then(setGugikLocation)
         })
-    }, [service])
+    })
 
     return (
         <div className={styles.wrapper}>
-            <div onClick={handleCloseModal}>
+            <div className={styles.closeModal}
+                onClick={handleCloseModal}
+            >
         X
             </div>
 
@@ -45,13 +49,40 @@ const SidenavWrapper = () => {
             <input type="text"
                 placeholder="Nazwa zwierza"
             />
-            <button>
-        Dodaj
-            </button>
 
-            <pre>
-                {JSON.stringify(gugikLocation, null, 4)}
-            </pre>
+            {/*
+  {lastClickedPoint.value?.lat}
+  {lastClickedPoint.value?.lng} */}
+
+            {/* <pre>
+    {JSON.stringify(gugikLocation, null, 4)}
+  </pre> */}
+            <input
+                type="text"
+                placeholder="Telefon"
+                value={telephone}
+                onChange={(e) => setTelephone(e.target.value)}
+            />
+
+            <input
+                type="text"
+                placeholder="Imię"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+
+            <input
+                type="file"
+                onChange={(e) => setAnimalPicture(e.target.files![0])}
+            />
+
+            <img
+                src={animalPicture ? URL.createObjectURL(animalPicture) : ''}
+                alt="Animal"
+            />
+            <button>
+        Dodaj Zgłoszenie
+            </button>
         </div>
     );
 }

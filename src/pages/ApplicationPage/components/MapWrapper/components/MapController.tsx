@@ -1,4 +1,7 @@
-import { LastTrackedPointProvider, mapElementState } from '@/pages/ApplicationPage/utils/state';
+import {
+    LastTrackedPointProvider,
+    mapElementState
+} from '@/pages/ApplicationPage/utils/state'
 import { useMapEvents } from 'react-leaflet';
 import {
     FC,

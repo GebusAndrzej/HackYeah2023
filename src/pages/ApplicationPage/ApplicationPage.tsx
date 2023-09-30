@@ -27,7 +27,7 @@ const ApplicationPage = () => {
                 <button onClick={handleChangeState}
                     className={styles.addButton}
                 >
-          Dodaj zwierza mordo
+          Dodaj dzikie zwierzę
                 </button>
             )}
 

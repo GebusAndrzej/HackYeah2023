@@ -3,5 +3,10 @@
     height: 100dvh;
     display: block;
     position: relative;
-    background-color: rgba(229, 0, 0, 0.22);
+    background-color: rgb(244, 244, 244);
+    transition-duration: 1s;
+}
+
+.shrink {
+    width: calc(100dvw - 340px);
 }
