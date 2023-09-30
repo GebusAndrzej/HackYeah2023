@@ -11,11 +11,6 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:react/jsx-runtime',
   ],
-  compilerOptions: {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowJs": true
-  },
   ignorePatterns: [
     'dist',
     '.eslintrc.cjs',

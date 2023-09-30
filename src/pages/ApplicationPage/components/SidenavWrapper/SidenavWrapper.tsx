@@ -1,59 +1,59 @@
 import styles from './SidenavWrapper.module.css';
-import { untracked } from '@preact/signals-react';
-import { APP_STATE, appState, lastClickedPoint } from '../../utils/state';
+import {
+    APP_STATE,
+    LastTrackedPointProvider,
+    appState
+} from '../../utils/state'
 import { projectLatLngToGUGIK } from '@/helpers/projectionHelpers';
 import { GugikService } from '@/services/GugikService';
-import { useCallback, useMemo, useState } from 'react';
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useState
+} from 'react'
 import { Plot } from '@/types/Plot';
 
-type Props = {};
+const SidenavWrapper = () => {
+    const service = useMemo(() => new GugikService(), []);
+    const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
 
-const SidenavWrapper = (props: Props) => {
-  const service = new GugikService();
-  const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
+    const handleCloseModal = useCallback(
+        () => {
+            appState.value = APP_STATE.VIEW
+        },
+        [],
+    )
 
-  useMemo(() => {
-    untracked(() => {
-      const location = lastClickedPoint.value
+    useEffect(() => {
+        LastTrackedPointProvider.getInstance().addListener((location) => {
+            const [x, y] = projectLatLngToGUGIK(location);
 
-      if (!location) return
+            service
+                .getPlotByXY({ x, y })
+                .then(setGugikLocation)
+        })
+    }, [service])
 
-      const [x, y] = projectLatLngToGUGIK(location);
-
-      service
-        .getPlotByXY({ x, y })
-        .then(setGugikLocation)
-    })
-  }, [])
-
-  const handleCloseModal = useCallback(
-    () => {
-      appState.value = APP_STATE.VIEW
-    },
-    [],
-  )
-
-
-  return (
-    <div className={styles.wrapper}>
-      <div onClick={handleCloseModal}>
+    return (
+        <div className={styles.wrapper}>
+            <div onClick={handleCloseModal}>
         X
-      </div>
+            </div>
 
-      <p>Dodaj zwierze</p>
-      <input type="text" placeholder="Nazwa zwierza" />
-      <button>
+            <p>Dodaj zwierze</p>
+            <input type="text"
+                placeholder="Nazwa zwierza"
+            />
+            <button>
         Dodaj
-      </button>
+            </button>
 
-      {lastClickedPoint.value?.lat}
-      {lastClickedPoint.value?.lng}
-
-      <pre>
-        {JSON.stringify(gugikLocation, null, 4)}
-      </pre>
-    </div>
-  );
+            <pre>
+                {JSON.stringify(gugikLocation, null, 4)}
+            </pre>
+        </div>
+    );
 }
 
 export default SidenavWrapper;

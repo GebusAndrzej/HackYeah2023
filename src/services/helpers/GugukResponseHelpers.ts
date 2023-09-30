@@ -1,10 +1,11 @@
-import { Plot } from "@/types/Plot";
+import { Plot } from '@/types/Plot';
 
 export const parseGugikRespone = (response: string): Plot => {
-    const [status, data] = response.split('\n')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, data] = response.split('\n')
 
     const [
-        geom_wkb, 
+        geom_wkb,
         geom_wkt,
         geom_extent,
         teryt,
@@ -15,10 +16,10 @@ export const parseGugikRespone = (response: string): Plot => {
         commune,
         region,
         parcel,
-    ] = data.split("|")
+    ] = data.split('|')
 
     return ({
-        geom_wkb, 
+        geom_wkb,
         geom_wkt,
         geom_extent,
         teryt,
