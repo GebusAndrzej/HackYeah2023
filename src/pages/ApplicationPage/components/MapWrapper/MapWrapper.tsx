@@ -4,9 +4,9 @@ import MapHandlerExample from './components/MapHandlerExample/MapHandlerExample'
 import { useCallback, useEffect, useState } from 'react'
 import { BackendService } from '@/services/BackendService'
 import { IReport } from '@/types/Report'
-import { marker } from 'leaflet'
 import ReportPopup from './components/ReportPopup/ReportPopup'
 import { APP_STATE, appState } from '../../utils/state'
+import clsx from 'clsx'
 
 type Props = {}
 
@@ -32,10 +32,14 @@ const MapWrapper = (props: Props) => {
 
   return (
     <>
-        <div className={styles.wrapper}>
+        <div className={clsx(
+          styles.wrapper,
+          appState.value == APP_STATE.ADD && styles.shrink
+        )}>
             <MapContainer 
               center={[50.0410866, 21.9991853]} 
-              zoom={13} 
+              zoom={13}
+              dragging
             >
                 <TileLayer
                     // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
