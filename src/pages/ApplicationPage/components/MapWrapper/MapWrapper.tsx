@@ -1,22 +1,56 @@
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 import styles from './MapWrapper.module.css'
 import MapHandlerExample from './components/MapHandlerExample/MapHandlerExample'
+import { useCallback, useEffect, useState } from 'react'
+import { BackendService } from '@/services/BackendService'
+import { IReport } from '@/types/Report'
+import { marker } from 'leaflet'
 
 type Props = {}
 
 const MapWrapper = (props: Props) => {
-    
+  const backendService = new BackendService();
+  const [markers, setMarkers] = useState<IReport[]>([])
+
+  const fetchExistingMarkers = useCallback(
+    () => {
+      backendService
+        .getMarkers()
+        .then(setMarkers)
+    },
+    []
+  )
+
+  useEffect(
+    () => {
+      fetchExistingMarkers()
+    },
+    [fetchExistingMarkers]
+  )
+
   return (
     <>
         <div className={styles.wrapper}>
-            <MapContainer center={[50.0410866, 21.9991853]} zoom={13} >
+            <MapContainer 
+              center={[50.0410866, 21.9991853]} 
+              zoom={13} 
+            >
                 <TileLayer
                     // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     // url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
                     // url='https://miip.geomalopolska.pl/arcgis/rest/services/MIIP_Orto2023/MapServer/tile/{z}/{y}/{x}'
-                    
                 />
+                  {!!markers.length && markers.map(marker => (
+                    <Marker 
+                      position={[marker.lat, marker.lng]} 
+                      key={marker.title}
+                    >
+                        <Popup>
+                          {marker.title}
+                        </Popup>
+                    </Marker>
+                  ))}
                 
                 <MapHandlerExample />
             </MapContainer>
