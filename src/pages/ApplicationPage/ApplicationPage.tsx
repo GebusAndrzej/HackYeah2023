@@ -22,7 +22,7 @@ const ApplicationPage = () => {
 
       {appState.value === APP_STATE.VIEW && (
         <button onClick={handleChangeState} className={styles.addButton}>
-          Dodaj zwierza mordo
+          Dodaj dzikie zwierzę
         </button>
       )}
 
