@@ -20,6 +20,12 @@ export const MapController: FC<Props> = (props: Props) => {
         dragstart() {
             props.setIsInMove(true)
         },
+        drag() {
+            const point = map.getCenter()
+            props.setIsInMove(false)
+            props.setLastPickedLocation(point)
+            // LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
+        },
         dragend() {
             const point = map.getCenter()
             props.setIsInMove(false)
