@@ -1,4 +1,5 @@
 import { signal } from "@preact/signals-react";
+import { LatLng } from "leaflet";
 
 export enum APP_STATE {
     VIEW = 'view',
@@ -6,3 +7,5 @@ export enum APP_STATE {
 }
 
 export const appState = signal(APP_STATE.VIEW);
+
+export const lastClickedPoint = signal<LatLng | undefined>(undefined);

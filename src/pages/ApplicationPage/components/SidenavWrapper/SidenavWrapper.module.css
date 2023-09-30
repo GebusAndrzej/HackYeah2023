@@ -2,10 +2,12 @@
     position: fixed;
     bottom: 0;
     z-index: 500;
-    background-color: red;
+    background-color: rgb(244, 244, 244);
     animation: forwards slideTop 1s;
     height: 500px;
-    width: 100%;
+    width: 100dvw;
+    padding: 20px;
+    color: black;
 }
 
 @media (min-width: 990px) {
@@ -15,6 +17,7 @@
         top: 0;
         right: 0;
         animation: forwards slideLeft 1s;
+        border-radius: 50px 0 0 50px;
     }
 }
 

@@ -6,6 +6,7 @@ import { BackendService } from '@/services/BackendService'
 import { IReport } from '@/types/Report'
 import { marker } from 'leaflet'
 import ReportPopup from './components/ReportPopup/ReportPopup'
+import { APP_STATE, appState } from '../../utils/state'
 
 type Props = {}
 
@@ -42,7 +43,7 @@ const MapWrapper = (props: Props) => {
                     // url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
                     // url='https://miip.geomalopolska.pl/arcgis/rest/services/MIIP_Orto2023/MapServer/tile/{z}/{y}/{x}'
                 />
-                  {!!markers.length && markers.map(marker => (
+                  {appState.value === APP_STATE.VIEW && markers.map(marker => (
                     <Marker 
                       position={[marker.lat, marker.lng]} 
                       key={marker.title}
