@@ -3,7 +3,7 @@ import { untracked } from '@preact/signals-react';
 import { APP_STATE, appState, lastClickedPoint } from '../../utils/state';
 import { projectLatLngToGUGIK } from '@/helpers/projectionHelpers';
 import { GugikService } from '@/services/GugikService';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Plot } from '@/types/Plot';
 
 type Props = {};
@@ -12,15 +12,19 @@ const SidenavWrapper = (props: Props) => {
   const service = new GugikService();
   const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
 
-  untracked(() => {
-    if (!lastClickedPoint.value) return;
+  useMemo(() => {
+    untracked(() => {
+      const location = lastClickedPoint.value
 
-      const [x,y] = projectLatLngToGUGIK(lastClickedPoint.value);
-          
+      if (!location) return
+
+      const [x, y] = projectLatLngToGUGIK(location);
+
       service
-        .getPlotByXY({x,y})
+        .getPlotByXY({ x, y })
         .then(setGugikLocation)
-  })
+    })
+  }, [])
 
   const handleCloseModal = useCallback(
     () => {
@@ -28,7 +32,7 @@ const SidenavWrapper = (props: Props) => {
     },
     [],
   )
-  
+
 
   return (
     <div className={styles.wrapper}>
@@ -40,7 +44,7 @@ const SidenavWrapper = (props: Props) => {
       <input type="text" placeholder="Nazwa zwierza" />
       <button>
         Dodaj
-      </button> 
+      </button>
 
       {lastClickedPoint.value?.lat}
       {lastClickedPoint.value?.lng}
