@@ -1,0 +1,39 @@
+.wrapper {
+    position: fixed;
+    bottom: 0;
+    z-index: 500;
+    background-color: red;
+    animation: forwards slideTop 1s;
+    height: 500px;
+    width: 100%;
+}
+
+@media (min-width: 990px) {
+    .wrapper {
+        width: 500px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        animation: forwards slideLeft 1s;
+    }
+}
+
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(100%)
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slideTop {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
