@@ -32,7 +32,7 @@ const SidenavWrapper = (props: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <div onClick={handleCloseModal}>
+      <div  className={styles.closeModal} onClick={handleCloseModal}>
         X
       </div>
 
