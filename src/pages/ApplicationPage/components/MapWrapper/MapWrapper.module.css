@@ -1,6 +1,6 @@
 .wrapper {
-    width: 500px;
-    height: 500px;
+    width: 101dvw;
+    height: 100dvh;
     display: block;
     position: relative;
     background-color: rgba(229, 0, 0, 0.22);

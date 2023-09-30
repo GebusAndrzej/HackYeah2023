@@ -1,9 +1,9 @@
 import './App.css'
-import ExamplePage from './pages/ExamplePage/ExamplePage'
+import ApplicationPage from './pages/ApplicationPage/ApplicationPage'
 
 function App() {
     return (
-        <ExamplePage />
+        <ApplicationPage />
     )
 }
 

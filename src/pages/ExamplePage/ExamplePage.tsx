@@ -5,7 +5,7 @@ import styles from './ExamplePage.module.css'
 import clsx from 'clsx'
 import { ExampleService } from '@/services/ExampleService'
 import { IPost } from '@/types/example'
-import MapExampleComponent from './components/MapExampleComponent/MapExampleComponent'
+import MapExampleComponent from './components/MapExampleComponent/MapWrapper'
 
 const ExamplePage = () => {
     const [count, setCount] = useState(0)
