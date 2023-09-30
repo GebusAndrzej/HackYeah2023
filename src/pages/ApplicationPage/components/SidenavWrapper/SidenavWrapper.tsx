@@ -11,6 +11,11 @@ type Props = {};
 const SidenavWrapper = (props: Props) => {
   const service = new GugikService();
   const [gugikLocation, setGugikLocation] = useState<Plot | undefined>()
+  const [telephone, setTelephone] = useState(''); 
+  const [place, setPlace] = useState('');
+  const [animalPicture, setAnimalPicture] = useState<File | null>(null);
+  const [name, setName] = useState('');
+
 
   untracked(() => {
     if (!lastClickedPoint.value) return;
@@ -37,18 +42,42 @@ const SidenavWrapper = (props: Props) => {
       </div>
 
       <p>Dodaj zwierze</p>
-      <input type="text" placeholder="Nazwa zwierza" />
-      <button>
-        Dodaj
-      </button> 
+  <input type="text" placeholder="Nazwa zwierza" />
 
-      {lastClickedPoint.value?.lat}
-      {lastClickedPoint.value?.lng}
+{/* 
+  {lastClickedPoint.value?.lat}
+  {lastClickedPoint.value?.lng} */}
 
-      <pre>
-        {JSON.stringify(gugikLocation, null, 4)}
-      </pre>
-    </div>
+  {/* <pre>
+    {JSON.stringify(gugikLocation, null, 4)}
+  </pre> */}
+  <input 
+  type="text"
+  placeholder="Telefon"
+  value={telephone}
+  onChange={(e) => setTelephone(e.target.value)} 
+/>
+
+<input
+  type="text"  
+  placeholder="Imię"
+  value={name}
+onChange={(e) => setName(e.target.value)}
+/>
+
+<input  
+  type="file"
+  onChange={(e) => setAnimalPicture(e.target.files![0])}
+/>
+
+<img 
+  src={animalPicture ? URL.createObjectURL(animalPicture) : ''} 
+  alt="Animal" 
+/>
+<button>
+    Dodaj Zgłoszenie
+  </button> 
+</div>
   );
 }
 
