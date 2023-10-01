@@ -14,9 +14,12 @@ import {
     useState
 } from 'react'
 import { Plot } from '@/types/Plot';
+import { IAnimal } from '@/types/Animal';
+import { BackendService } from '@/services/BackendService';
 
 const SidenavWrapper = () => {
     const service = useMemo(() => new GugikService(), []);
+    const backendService = useMemo(() => new BackendService(), []);
     const handleCloseModal = useCallback(
         () => {
             appState.value = APP_STATE.VIEW
@@ -26,6 +29,7 @@ const SidenavWrapper = () => {
         },
         [],
     )
+    const [animalsList, setAnimalsList] = useState<IAnimal[] | null>(null)
     const [gugikLocation, setGugikLocation] = useState<Plot | undefined>();
     const [telephone, setTelephone] = useState('');
     const [animalPicture, setAnimalPicture] = useState<File | null>(null);
@@ -39,7 +43,9 @@ const SidenavWrapper = () => {
                 .getPlotByXY({ x, y })
                 .then(setGugikLocation)
         })
-    })
+
+        backendService.getAnimalTypes().then(setAnimalsList)
+    }, [backendService, service])
 
     return (
         <div className={styles.wrapper}>
@@ -50,17 +56,16 @@ const SidenavWrapper = () => {
             </div>
 
             <p>Dodaj zwierze</p>
-            <input type="text"
-                placeholder="Nazwa zwierza"
-            />
+            <select placeholder="Nazwa zwierza">
+                {animalsList?.map((animal) => (
+                    <option value={animal.id}
+                        key={animal.name}
+                    >
+                        {animal.name}
+                    </option>
+                ))}
+            </select>
 
-            {/*
-  {lastClickedPoint.value?.lat}
-  {lastClickedPoint.value?.lng} */}
-
-            {/* <pre>
-    {JSON.stringify(gugikLocation, null, 4)}
-  </pre> */}
             <input
                 type="text"
                 placeholder="Telefon"
