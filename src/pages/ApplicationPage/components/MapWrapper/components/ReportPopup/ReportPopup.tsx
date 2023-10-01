@@ -17,7 +17,6 @@ const ReportPopup = ({
     return (
         <div className={styles.wrapper}>
             Zgłosił: {report.user.userName} <br/>
-            {date.toLocaleDateString()}
 
             <div className={styles.imageWrapper}>
                 <img src={report.eventPhotos.image}
