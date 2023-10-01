@@ -59,7 +59,7 @@ const MapWrapper = () => {
             )}
             >
                 <MapContainer
-                    center={[50.0410866, 21.9991853]}
+                    center={[50.0674221, 19.9919528]}
                     zoom={13}
                     dragging
                 >
