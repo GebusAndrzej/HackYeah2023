@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 0;
     z-index: 500;
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(252, 252, 252);
     animation: forwards slideTop 1s;
     height: 500px;
     width: 100dvw;
@@ -71,7 +71,6 @@ p {
   }
   
   input, button, select {
-    width: 90%;
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ddd;
