@@ -32,6 +32,11 @@ export const MapController: FC<Props> = (props: Props) => {
             map.flyTo(event.latlng, map.getZoom())
             const point = map.getCenter()
             LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
+        },
+        zoom() {
+            const point = map.getCenter()
+            map.invalidateSize();
+            LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
         }
     })
 

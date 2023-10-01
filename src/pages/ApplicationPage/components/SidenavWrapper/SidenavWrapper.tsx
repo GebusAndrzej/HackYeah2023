@@ -36,9 +36,27 @@ const SidenavWrapper = () => {
     const [animalPicture, setAnimalPicture] = useState<File | null>(null);
     const [name, setName] = useState('');
 
+    const validateForm = useMemo(
+        () => ({
+            animalId: currentAnimal == 0,
+            phone: !telephone.length,
+            name: !name.length,
+            animalPicture: !animalPicture
+        }),
+        [animalPicture, currentAnimal, name.length, telephone.length]
+    )
+
+    const isAnyError = useMemo(
+        () => Object.values(validateForm).some(x => x === false),
+        [validateForm]
+    )
+
     const handleSaveForm = useCallback(async () => {
+        if (isAnyError) return;
+
         const picture = await getBase64(animalPicture as File) as string
         const location = LastTrackedPointProvider.getInstance().getLastLocalization()
+
         backendService.addReport(
             {
                 animalId: currentAnimal,
@@ -53,7 +71,7 @@ const SidenavWrapper = () => {
                 user: {userId: null, userName: name, phone: telephone}
             })
         handleCloseModal()
-    }, [animalPicture, backendService, currentAnimal, handleCloseModal, name, telephone])
+    }, [animalPicture, backendService, currentAnimal, handleCloseModal, isAnyError, name, telephone])
 
     useEffect(() => {
         // LastTrackedPointProvider.getInstance().addListener((location) => {
@@ -71,44 +89,76 @@ const SidenavWrapper = () => {
             <div className={styles.closeModal}
                 onClick={handleCloseModal}
             >
-        X
+                X
             </div>
 
             <p>Dodaj zwierze</p>
-            <select required={true}
-                onChange={event => {
-                    setCurrentAnimal(+event.currentTarget.value)
-                }}
-                placeholder="Nazwa zwierza"
-            >
-                {animalsList?.map((animal) => (
-                    <option value={animal.animalId}
-                        key={animal.animalId}
-                    >
-                        {animal.name}
+
+            <div className={styles.inputContainer}>
+                {validateForm.animalId && (
+                    <span>Pole wymagane</span>
+                )}
+
+                <select 
+                    required={true}
+                    onChange={event => {
+                        setCurrentAnimal(+event.currentTarget.value)
+                    }}
+                    placeholder="Nazwa zwierza"
+                    value={currentAnimal}
+                >
+                    <option disabled value={0}>
+                        Wybierz zwierze
                     </option>
-                ))}
-            </select>
 
-            <input
-                type="text"
-                placeholder="Telefon"
-                value={telephone}
-                onChange={(e) => setTelephone(e.target.value)}
-            />
+                    {animalsList?.map((animal) => (
+                        <option value={animal.animalId}
+                            key={animal.animalId}
+                        >
+                            {animal.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
-            <input
-                type="text"
-                placeholder="Imię"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
+            <div className={styles.inputContainer}>
+                {validateForm.phone && (
+                    <span>Pole wymagane</span>
+                )}
 
-            <input
-                type="file"
-                onChange={(e) => setAnimalPicture(e.target.files![0])}
-                accept="image/png, image/jpeg"
-            />
+                <input
+                    type="text"
+                    placeholder="Telefon"
+                    value={telephone}
+                    onChange={(e) => setTelephone(e.target.value)}
+                />
+            </div>
+
+            <div className={styles.inputContainer}>
+                {validateForm.name && (
+                    <span>Pole wymagane</span>
+                )}
+
+                <input
+                    type="text"
+                    placeholder="Imię"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
+
+            <div className={styles.inputContainer}>
+                {validateForm.animalPicture && (
+                    <span>Pole wymagane</span>
+                )}
+
+                <input
+                    type="file"
+                    onChange={(e) => setAnimalPicture(e.target.files![0])}
+                    accept="image/png, image/jpeg"
+                    required
+                />
+            </div>
 
             {animalPicture && (
                 <img
@@ -118,7 +168,7 @@ const SidenavWrapper = () => {
             )}
 
             <button onClick={handleSaveForm}>
-                Zapisz se kurde
+                Zgłoś zwierzę
             </button>
         </div>
     );
