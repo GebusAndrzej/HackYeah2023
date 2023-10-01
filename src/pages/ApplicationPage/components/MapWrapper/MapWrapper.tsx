@@ -16,6 +16,8 @@ import { IReport } from '@/types/Report'
 import ReportPopup from './components/ReportPopup/ReportPopup'
 import {
     APP_STATE,
+    BullshitSingleton,
+    LastTrackedPointProvider,
     appState
 } from '../../utils/state'
 import { MapController } from './components/MapController'
@@ -44,12 +46,15 @@ const MapWrapper = () => {
         [fetchExistingMarkers]
     )
 
-    useEffect(
-        () => {
+    useEffect(() => {
+        LastTrackedPointProvider.getInstance().addListener((location) => {
+            setLastPickedLocation(location)
+        })
+
+        BullshitSingleton.getInstance().addListener(() => {
             fetchExistingMarkers()
-        },
-        [fetchExistingMarkers]
-    )
+        })
+    }, [fetchExistingMarkers])
 
     return (
         <>
@@ -59,12 +64,10 @@ const MapWrapper = () => {
             )}
             >
                 <MapContainer
-                    center={[50.0674221, 19.9919528]}
+                    center={[49.0674221, 19.9919528]}
                     zoom={13}
-                    dragging
                 >
                     <TileLayer
-                    // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     {appState.value === APP_STATE.VIEW && markers.map(marker => (
@@ -82,16 +85,8 @@ const MapWrapper = () => {
                         <Marker position={[lastPickedLocation.lat, lastPickedLocation.lng]} />
                     )}
 
-                    <MapController setIsInMove={setIsInMove}
-                        setLastPickedLocation={setLastPickedLocation}
-                    />
+                    <MapController setIsInMove={setIsInMove} />
                 </MapContainer>
-
-                {appState.value === APP_STATE.ADD && (
-                    <div>
-                        {`${isInMove}`}
-                    </div>
-                )}
             </div>
         </>
     )

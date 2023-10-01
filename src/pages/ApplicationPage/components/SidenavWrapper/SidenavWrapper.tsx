@@ -1,6 +1,7 @@
 import styles from './SidenavWrapper.module.css';
 import {
     APP_STATE,
+    BullshitSingleton,
     LastTrackedPointProvider,
     appState,
     mapElementState
@@ -17,7 +18,7 @@ import { BackendService } from '@/services/BackendService';
 import { getBase64 } from '@/helpers/imagehelper';
 
 const SidenavWrapper = () => {
-    const [currentAnimal, setCurrentAnimal] = useState<number>(0)
+    const [currentAnimal, setCurrentAnimal] = useState<number>(0);
     const service = useMemo(() => new GugikService(), []);
     const backendService = useMemo(() => new BackendService(), []);
     const handleCloseModal = useCallback(
@@ -25,6 +26,7 @@ const SidenavWrapper = () => {
             appState.value = APP_STATE.VIEW
             setTimeout(() => {
                 mapElementState.value?.invalidateSize()
+                BullshitSingleton.getInstance().notifySomethingChanged()
             }, 500)
         },
         [],
@@ -48,10 +50,10 @@ const SidenavWrapper = () => {
                     latitude: location.lat,
                     longitude: location.lng
                 },
-                user: {userId: 'seszn-ajdi', userName: name, phone: telephone}
-
+                user: {userId: null, userName: name, phone: telephone}
             })
-    }, [animalPicture, backendService, currentAnimal, name, telephone])
+        handleCloseModal()
+    }, [animalPicture, backendService, currentAnimal, handleCloseModal, name, telephone])
 
     useEffect(() => {
         // LastTrackedPointProvider.getInstance().addListener((location) => {
@@ -80,8 +82,8 @@ const SidenavWrapper = () => {
                 placeholder="Nazwa zwierza"
             >
                 {animalsList?.map((animal) => (
-                    <option value={animal.id}
-                        key={animal.name}
+                    <option value={animal.animalId}
+                        key={animal.animalId}
                     >
                         {animal.name}
                     </option>
@@ -108,10 +110,12 @@ const SidenavWrapper = () => {
                 accept="image/png, image/jpeg"
             />
 
-            <img
-                src={animalPicture ? URL.createObjectURL(animalPicture) : ''}
-                alt="Animal"
-            />
+            {animalPicture && (
+                <img
+                    src={animalPicture ? URL.createObjectURL(animalPicture) : ''}
+                    alt="Animal"
+                />
+            )}
 
             <button onClick={handleSaveForm}>
                 Zapisz se kurde

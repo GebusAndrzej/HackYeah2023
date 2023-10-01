@@ -38,3 +38,24 @@ export class LastTrackedPointProvider {
         this.listeners.push(listener)
     }
 }
+
+export class BullshitSingleton {
+    private listeners: (() => void)[] = []
+ 
+    private static instance: BullshitSingleton | null = null
+
+    static getInstance(): BullshitSingleton {
+        if (!this.instance) {
+            this.instance = new BullshitSingleton()
+        }
+        return this.instance
+    }
+
+    notifySomethingChanged() {
+        this.listeners.forEach((x) => x())
+    }
+
+    addListener(listener: () => void) {
+        this.listeners.push(listener)
+    }
+}

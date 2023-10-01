@@ -3,6 +3,7 @@ import styles from './ApplicationPage.module.css'
 import MapWrapper from './components/MapWrapper/MapWrapper'
 import {
     APP_STATE,
+    LastTrackedPointProvider,
     appState,
     mapElementState
 } from './utils/state'
@@ -13,11 +14,22 @@ const ApplicationPage = () => {
         () => {
             appState.value = APP_STATE.ADD
             setTimeout(() => {
-                mapElementState.value?.invalidateSize()
+                const map = mapElementState.value;
+                if (map) {
+                    map.invalidateSize()
+                    LastTrackedPointProvider.getInstance().setLastClickedPoint(map.getCenter())
+                }
             }, 500)
         },
         []
     )
+
+    const handleLocate = () => {
+        const map = mapElementState.value;
+        if (map) {
+            map.locate()
+        }
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -35,6 +47,11 @@ const ApplicationPage = () => {
                 </button>
             )}
 
+            <button onClick={handleLocate}
+                className={styles.locateButton}
+            >
+          ╟╢╙╜⌡
+            </button>
         </div>
     )
 }

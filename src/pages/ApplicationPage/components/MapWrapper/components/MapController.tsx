@@ -5,13 +5,11 @@ import {
 import { useMapEvents } from 'react-leaflet';
 import {
     FC,
-    useEffect
+    useEffect,
 } from 'react'
-import { LatLng } from 'leaflet';
 
 interface Props {
     setIsInMove: (value: boolean) => void
-    setLastPickedLocation: (value: LatLng) => void
 }
 
 export const MapController: FC<Props> = (props: Props) => {
@@ -23,20 +21,25 @@ export const MapController: FC<Props> = (props: Props) => {
         drag() {
             const point = map.getCenter()
             props.setIsInMove(false)
-            props.setLastPickedLocation(point)
-            // LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
+            LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
         },
         dragend() {
             const point = map.getCenter()
             props.setIsInMove(false)
-            props.setLastPickedLocation(point)
+            LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
+        },
+        locationfound(event) {
+            map.flyTo(event.latlng, map.getZoom())
+            const point = map.getCenter()
             LastTrackedPointProvider.getInstance().setLastClickedPoint(point)
         }
     })
 
     useEffect(() => {
         mapElementState.value = map
-    }, [map])
+        map.locate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return null;
 }
