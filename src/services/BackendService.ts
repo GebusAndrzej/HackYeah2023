@@ -1,5 +1,6 @@
 import { AHttpClient } from '@/http/axiosAbstract';
 import { IAnimal } from '@/types/Animal';
+import { IPredictedReport } from '@/types/PredictedReport';
 import { IReport } from '@/types/Report';
 
 export class BackendService extends AHttpClient {
@@ -15,5 +16,9 @@ export class BackendService extends AHttpClient {
 
     getAllReports = () => this.http
         .get<IReport[]>('/api/Event/GetAll')
+        .then(response => response.data)
+
+    getPredictedPins = () => this.http
+        .get<IPredictedReport[]>('/api/PredictedEvent/GetAll')
         .then(response => response.data)
 }

@@ -23,10 +23,13 @@ import {
 import { MapController } from './components/MapController'
 import { LatLng } from 'leaflet'
 import clsx from 'clsx'
+import { IPredictedReport } from '@/types/PredictedReport'
+import PredictedReportPopup from './components/ReportPopup/PredictedRecordPopup'
 
 const MapWrapper = () => {
     const backendService = useMemo(() => new BackendService(), [])
     const [markers, setMarkers] = useState<IReport[]>([])
+    const [predictedMarkers, setPredictedMarkers] = useState<IPredictedReport[]>([])
     const [isInMove, setIsInMove] = useState(false)
     const [lastPickedLocation, setLastPickedLocation] = useState<LatLng | null>(null)
 
@@ -35,6 +38,11 @@ const MapWrapper = () => {
             backendService
                 .getAllReports()
                 .then(setMarkers)
+
+                console.log("asdasd")
+            backendService
+                .getPredictedPins()
+                .then(setPredictedMarkers)
         },
         [backendService]
     )
@@ -77,6 +85,17 @@ const MapWrapper = () => {
                         >
                             <Popup>
                                 <ReportPopup report={marker} />
+                            </Popup>
+                        </Marker>
+                    ))}
+                    { appState.value === APP_STATE.VIEW && predictedMarkers.map((marker) => (
+                        <Marker
+                            opacity={0.5}
+                            position={[marker.localization.latitude, marker.localization.longitude]}
+                            key={marker.predictionId}
+                        >
+                            <Popup>
+                                <PredictedReportPopup report={marker} />
                             </Popup>
                         </Marker>
                     ))}
