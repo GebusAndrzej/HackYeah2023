@@ -78,14 +78,16 @@ const SidenavWrapper = () => {
             <input
                 type="file"
                 onChange={(e) => setAnimalPicture(e.target.files![0])}
+                accept='image/png, image/jpeg'
             />
 
             <img
                 src={animalPicture ? URL.createObjectURL(animalPicture) : ''}
                 alt="Animal"
             />
+
             <button>
-        Dodaj Zgłoszenie
+                Dodaj Zgłoszenie
             </button>
         </div>
     );
