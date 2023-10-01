@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import styles from './ApplicationPage.module.css'
 import MapWrapper from './components/MapWrapper/MapWrapper'
 import {
