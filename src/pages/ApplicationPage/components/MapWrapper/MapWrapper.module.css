@@ -7,6 +7,12 @@
     transition-duration: 1s;
 }
 
+@media (max-width: 990px) {
+    .shrink {
+        height: calc(100dvh - 440px);
+    }
+}
+
 @media (min-width: 990px) {
     .shrink {
         width: calc(100dvw - 340px);

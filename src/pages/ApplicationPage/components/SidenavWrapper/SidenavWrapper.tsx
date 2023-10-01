@@ -91,122 +91,126 @@ const SidenavWrapper = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.closeModal}
-                onClick={handleCloseModal}
-            >
-                X
-            </div>
-
-            <p>Dodaj zwierze</p>
-
-            <div className={styles.inputContainer}>
-                <span>
-                    Zwierzę
-                </span>
-
-                <select
-                    required={true}
-                    onChange={event => {
-                        setCurrentAnimal(+event.currentTarget.value)
-                    }}
-                    placeholder="Nazwa zwierza"
-                    value={currentAnimal}
-                    className={clsx(
-                        validateForm.animalId && thereWasAnAttempt && styles.error
-                    )}
+            <div className={styles.innerContainer}>
+                <div className={styles.closeModal}
+                    onClick={handleCloseModal}
                 >
-                    <option
-                        disabled
-                        value={0}
+                X
+                </div>
+
+                <p>Dodaj zgłoszenie</p>
+
+                <div className={styles.inputContainer}>
+                    <span>
+                    Zwierzę
+                    </span>
+
+                    <select
+                        required={true}
+                        onChange={event => {
+                            setCurrentAnimal(+event.currentTarget.value)
+                        }}
+                        placeholder="Nazwa zwierza"
+                        value={currentAnimal}
+                        className={clsx(
+                            validateForm.animalId && thereWasAnAttempt && styles.error
+                        )}
                     >
-                        Wybierz zwierze
-                    </option>
-
-                    {animalsList?.map((animal) => (
-                        <option value={animal.animalId}
-                            key={animal.animalId}
+                        <option
+                            disabled
+                            value={0}
                         >
-                            {animal.name}
+                        Wybierz zwierze
                         </option>
-                    ))}
-                </select>
 
-                {validateForm.animalId && thereWasAnAttempt && (
-                    <span className={styles.errorLabel}>Pole wymagane</span>
-                )}
-            </div>
+                        {animalsList?.map((animal) => (
+                            <option value={animal.animalId}
+                                key={animal.animalId}
+                            >
+                                {animal.name}
+                            </option>
+                        ))}
+                    </select>
 
-            <div className={styles.inputContainer}>
-                <span>
-                    Numer telefonu
-                </span>
-
-                <input
-                    type="text"
-                    placeholder="Telefon"
-                    value={telephone}
-                    onChange={(e) => setTelephone(e.target.value)}
-                    className={clsx(
-                        validateForm.phone && thereWasAnAttempt && styles.error
+                    {validateForm.animalId && thereWasAnAttempt && (
+                        <span className={styles.errorLabel}>Pole wymagane</span>
                     )}
-                />
+                </div>
 
-                {validateForm.phone && thereWasAnAttempt && (
-                    <span className={styles.errorLabel}>Pole wymagane</span>
-                )}
-            </div>
+                <div className={styles.inputContainer}>
+                    <span>
+                    Numer telefonu
+                    </span>
 
-            <div className={styles.inputContainer}>
-                <span>
+                    <input
+                        type="text"
+                        placeholder="Telefon"
+                        value={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                        className={clsx(
+                            validateForm.phone && thereWasAnAttempt && styles.error
+                        )}
+                    />
+
+                    {validateForm.phone && thereWasAnAttempt && (
+                        <span className={styles.errorLabel}>Pole wymagane</span>
+                    )}
+                </div>
+
+                <div className={styles.inputContainer}>
+                    <span>
                     Imię
 
-                </span>
+                    </span>
 
-                <input
-                    type="text"
-                    placeholder="Imię"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className={clsx(
-                        validateForm.name && thereWasAnAttempt && styles.error
+                    <input
+                        type="text"
+                        placeholder="Imię"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={clsx(
+                            validateForm.name && thereWasAnAttempt && styles.error
+                        )}
+                    />
+
+                    {validateForm.name && thereWasAnAttempt && (
+                        <span className={styles.errorLabel}>Pole wymagane</span>
                     )}
-                />
+                </div>
 
-                {validateForm.name && thereWasAnAttempt && (
-                    <span className={styles.errorLabel}>Pole wymagane</span>
-                )}
-            </div>
-
-            <div className={styles.inputContainer}>
-                <span>
+                <div className={styles.inputContainer}>
+                    <span>
                     Zdjęcie
-                </span>
+                    </span>
 
-                <input
-                    type="file"
-                    onChange={(e) => setAnimalPicture(e.target.files![0])}
-                    accept="image/png, image/jpeg"
-                    required
-                    className={clsx(
-                        validateForm.animalPicture && thereWasAnAttempt && styles.error
+                    <input
+                        type="file"
+                        onChange={(e) => setAnimalPicture(e.target.files![0])}
+                        accept="image/png, image/jpeg"
+                        required
+                        className={clsx(
+                            validateForm.animalPicture && thereWasAnAttempt && styles.error
+                        )}
+                    />
+
+                    {validateForm.animalPicture && thereWasAnAttempt && (
+                        <span className={styles.errorLabel}>Pole wymagane</span>
                     )}
-                />
+                </div>
 
-                {validateForm.animalPicture && thereWasAnAttempt && (
-                    <span className={styles.errorLabel}>Pole wymagane</span>
+                {animalPicture && (
+                    <img
+                        src={animalPicture ? URL.createObjectURL(animalPicture) : ''}
+                        alt="Animal"
+                    />
                 )}
-            </div>
 
-            {animalPicture && (
-                <img
-                    src={animalPicture ? URL.createObjectURL(animalPicture) : ''}
-                    alt="Animal"
-                />
-            )}
-
-            <button onClick={handleSaveForm}>
+                <button onClick={handleSaveForm}
+                    className={styles.submitButton}
+                >
                 Zgłoś zwierzę
-            </button>
+                </button>
+            </div>
         </div>
     );
 }
