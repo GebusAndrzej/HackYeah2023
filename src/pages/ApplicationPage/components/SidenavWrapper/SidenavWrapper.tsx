@@ -91,7 +91,8 @@ const SidenavWrapper = () => {
                 alt="Animal"
             />
 
-            <button>
+            <button
+            >
                 Dodaj Zgłoszenie
             </button>
         </div>
