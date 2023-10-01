@@ -39,7 +39,6 @@ const MapWrapper = () => {
                 .getAllReports()
                 .then(setMarkers)
 
-                console.log("asdasd")
             backendService
                 .getPredictedPins()
                 .then(setPredictedMarkers)
@@ -90,12 +89,12 @@ const MapWrapper = () => {
                     ))}
                     { appState.value === APP_STATE.VIEW && predictedMarkers.map((marker) => (
                         <Marker
-                            opacity={0.5}
+                            opacity={0.2}
                             position={[marker.localization.latitude, marker.localization.longitude]}
                             key={marker.predictionId}
                         >
                             <Popup>
-                                <PredictedReportPopup report={marker} />
+                                Przewidywana lokacja
                             </Popup>
                         </Marker>
                     ))}

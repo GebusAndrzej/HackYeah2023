@@ -11,9 +11,11 @@ const PredictedReportPopup = ({
     return (
         <div className={styles.wrapper}>
             <div className={styles.imageWrapper}>
-                <img src={report.photo.image}
-                    className={styles.image}
-                />
+                {report.photo.image && (
+                    <img src={report.photo.image}
+                        className={styles.image}
+                    />
+                )}
             </div>
 
         </div>
