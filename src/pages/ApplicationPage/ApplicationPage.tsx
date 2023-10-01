@@ -45,7 +45,7 @@ const ApplicationPage = () => {
                     onClick={handleChangeState}
                     className={styles.addButton}
                 >
-                    Dodaj dzikie zwierzę
+                    Zgłoś zwierzę
                 </button>
             )}
 
