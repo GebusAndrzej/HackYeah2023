@@ -77,6 +77,16 @@ p {
     border: 1px solid #ddd;
     font-size: 1em;
   }
+
+  .error {
+    border: 1px solid rgb(91, 2, 2);
+    background-color: rgba(241, 41, 41, 0.35);
+    color: white;
+  }
+
+  .error::placeholder {
+    color: white;
+  }
   
   button {
     background: #1e90ff;
@@ -104,6 +114,13 @@ p {
     gap:0;
 } 
 
-.inputContainer span {
+.inputContainer > span {
+    font-size: 14px;
+    display: flex;
+}
+
+.errorLabel {
+    /* margin-left: auto; */
+    color: red;
     font-size: 10px;
 }

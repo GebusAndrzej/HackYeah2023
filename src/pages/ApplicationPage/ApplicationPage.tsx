@@ -8,6 +8,7 @@ import {
     mapElementState
 } from './utils/state'
 import SidenavWrapper from './components/SidenavWrapper/SidenavWrapper'
+import myLocationSvg from '@/assets/myLocation.svg'
 
 const ApplicationPage = () => {
     const handleChangeState = useCallback(
@@ -40,17 +41,18 @@ const ApplicationPage = () => {
             )}
 
             {appState.value === APP_STATE.VIEW && (
-                <button onClick={handleChangeState}
+                <button 
+                    onClick={handleChangeState}
                     className={styles.addButton}
                 >
-          Dodaj dzikie zwierzę
+                    Dodaj dzikie zwierzę
                 </button>
             )}
 
             <button onClick={handleLocate}
                 className={styles.locateButton}
             >
-          ╟╢╙╜⌡
+                <img src={myLocationSvg} />
             </button>
         </div>
     )

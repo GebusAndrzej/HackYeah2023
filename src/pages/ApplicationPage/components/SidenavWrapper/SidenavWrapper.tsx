@@ -16,6 +16,7 @@ import {
 import { IAnimal } from '@/types/Animal';
 import { BackendService } from '@/services/BackendService';
 import { getBase64 } from '@/helpers/imagehelper';
+import clsx from 'clsx';
 
 const SidenavWrapper = () => {
     const [currentAnimal, setCurrentAnimal] = useState<number>(0);
@@ -35,6 +36,7 @@ const SidenavWrapper = () => {
     const [telephone, setTelephone] = useState('');
     const [animalPicture, setAnimalPicture] = useState<File | null>(null);
     const [name, setName] = useState('');
+    const [thereWasAnAttempt, setThereWasAnAttempt] = useState(false)
 
     const validateForm = useMemo(
         () => ({
@@ -47,11 +49,12 @@ const SidenavWrapper = () => {
     )
 
     const isAnyError = useMemo(
-        () => Object.values(validateForm).some(x => x === false),
+        () => Object.values(validateForm).some(x => x === true),
         [validateForm]
     )
 
     const handleSaveForm = useCallback(async () => {
+        setThereWasAnAttempt(true);
         if (isAnyError) return;
 
         const picture = await getBase64(animalPicture as File) as string
@@ -70,7 +73,9 @@ const SidenavWrapper = () => {
                 },
                 user: {userId: null, userName: name, phone: telephone}
             })
+
         handleCloseModal()
+        setThereWasAnAttempt(false);
     }, [animalPicture, backendService, currentAnimal, handleCloseModal, isAnyError, name, telephone])
 
     useEffect(() => {
@@ -95,19 +100,25 @@ const SidenavWrapper = () => {
             <p>Dodaj zwierze</p>
 
             <div className={styles.inputContainer}>
-                {validateForm.animalId && (
-                    <span>Pole wymagane</span>
-                )}
+                <span>
+                    Zwierzę
+                </span>
 
-                <select 
+                <select
                     required={true}
                     onChange={event => {
                         setCurrentAnimal(+event.currentTarget.value)
                     }}
                     placeholder="Nazwa zwierza"
                     value={currentAnimal}
+                    className={clsx(
+                        validateForm.animalId && thereWasAnAttempt && styles.error
+                    )}
                 >
-                    <option disabled value={0}>
+                    <option
+                        disabled
+                        value={0}
+                    >
                         Wybierz zwierze
                     </option>
 
@@ -119,45 +130,71 @@ const SidenavWrapper = () => {
                         </option>
                     ))}
                 </select>
+
+                {validateForm.animalId && thereWasAnAttempt && (
+                    <span className={styles.errorLabel}>Pole wymagane</span>
+                )}
             </div>
 
             <div className={styles.inputContainer}>
-                {validateForm.phone && (
-                    <span>Pole wymagane</span>
-                )}
+                <span>
+                    Numer telefonu
+                </span>
 
                 <input
                     type="text"
                     placeholder="Telefon"
                     value={telephone}
                     onChange={(e) => setTelephone(e.target.value)}
+                    className={clsx(
+                        validateForm.phone && thereWasAnAttempt && styles.error
+                    )}
                 />
+
+                {validateForm.phone && thereWasAnAttempt && (
+                    <span className={styles.errorLabel}>Pole wymagane</span>
+                )}
             </div>
 
             <div className={styles.inputContainer}>
-                {validateForm.name && (
-                    <span>Pole wymagane</span>
-                )}
+                <span>
+                    Imię
+
+                </span>
 
                 <input
                     type="text"
                     placeholder="Imię"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    className={clsx(
+                        validateForm.name && thereWasAnAttempt && styles.error
+                    )}
                 />
+
+                {validateForm.name && thereWasAnAttempt && (
+                    <span className={styles.errorLabel}>Pole wymagane</span>
+                )}
             </div>
 
             <div className={styles.inputContainer}>
-                {validateForm.animalPicture && (
-                    <span>Pole wymagane</span>
-                )}
+                <span>
+                    Zdjęcie
+                </span>
 
                 <input
                     type="file"
                     onChange={(e) => setAnimalPicture(e.target.files![0])}
                     accept="image/png, image/jpeg"
                     required
+                    className={clsx(
+                        validateForm.animalPicture && thereWasAnAttempt && styles.error
+                    )}
                 />
+
+                {validateForm.animalPicture && thereWasAnAttempt && (
+                    <span className={styles.errorLabel}>Pole wymagane</span>
+                )}
             </div>
 
             {animalPicture && (
