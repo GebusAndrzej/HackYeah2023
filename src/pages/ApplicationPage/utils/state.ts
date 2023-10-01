@@ -25,6 +25,10 @@ export class LastTrackedPointProvider {
         return this.instance
     }
 
+    getLastLocalization() {
+        return this.lastTrackedPoint
+    }
+
     setLastClickedPoint(point: LatLng) {
         this.lastTrackedPoint = point
         this.listeners.forEach((listener) => listener(this.lastTrackedPoint))

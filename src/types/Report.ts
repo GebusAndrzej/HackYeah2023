@@ -3,7 +3,7 @@ import { ILocalization } from "./Localization";
 import { IUser } from "./User";
 
 export interface IReport {
-    eventId: number,
+    eventId: number | null,
     localization: ILocalization,
     user: IUser,
     eventPhotos: IEventPhotos,

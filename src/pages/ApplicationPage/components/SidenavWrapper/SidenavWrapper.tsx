@@ -5,7 +5,6 @@ import {
     appState,
     mapElementState
 } from '../../utils/state'
-import { projectLatLngToGUGIK } from '@/helpers/projectionHelpers';
 import { GugikService } from '@/services/GugikService';
 import {
     useCallback,
@@ -13,11 +12,12 @@ import {
     useMemo,
     useState
 } from 'react'
-import { Plot } from '@/types/Plot';
 import { IAnimal } from '@/types/Animal';
 import { BackendService } from '@/services/BackendService';
+import { getBase64 } from '@/helpers/imagehelper';
 
 const SidenavWrapper = () => {
+    const [currentAnimal, setCurrentAnimal] = useState<number>(0)
     const service = useMemo(() => new GugikService(), []);
     const backendService = useMemo(() => new BackendService(), []);
     const handleCloseModal = useCallback(
@@ -30,20 +30,37 @@ const SidenavWrapper = () => {
         [],
     )
     const [animalsList, setAnimalsList] = useState<IAnimal[] | null>(null)
-    const [gugikLocation, setGugikLocation] = useState<Plot | undefined>();
     const [telephone, setTelephone] = useState('');
     const [animalPicture, setAnimalPicture] = useState<File | null>(null);
     const [name, setName] = useState('');
 
+    const handleSaveForm = useCallback(async () => {
+        const picture = await getBase64(animalPicture as File) as string
+        const location = LastTrackedPointProvider.getInstance().getLastLocalization()
+        backendService.addReport(
+            {
+                animalId: currentAnimal,
+                eventId: null,
+                eventPhotos: {
+                    image: picture
+                },
+                localization: {
+                    latitude: location.lat,
+                    longitude: location.lng
+                },
+                user: {userId: 'seszn-ajdi', userName: name, phone: telephone}
+
+            })
+    }, [animalPicture, backendService, currentAnimal, name, telephone])
+
     useEffect(() => {
-        LastTrackedPointProvider.getInstance().addListener((location) => {
-            const [x, y] = projectLatLngToGUGIK(location);
+        // LastTrackedPointProvider.getInstance().addListener((location) => {
+        //     const [x, y] = projectLatLngToGUGIK(location);
 
-            service
-                .getPlotByXY({ x, y })
-                .then(setGugikLocation)
-        })
-
+        //     service
+        //         .getPlotByXY({ x, y })
+        //         .then(setGugikLocation)
+        // })
         backendService.getAnimalTypes().then(setAnimalsList)
     }, [backendService, service])
 
@@ -56,7 +73,12 @@ const SidenavWrapper = () => {
             </div>
 
             <p>Dodaj zwierze</p>
-            <select placeholder="Nazwa zwierza">
+            <select required={true}
+                onSelect={(event) => {
+                    setCurrentAnimal(+event.currentTarget.value)
+                }}
+                placeholder="Nazwa zwierza"
+            >
                 {animalsList?.map((animal) => (
                     <option value={animal.id}
                         key={animal.name}
@@ -83,7 +105,7 @@ const SidenavWrapper = () => {
             <input
                 type="file"
                 onChange={(e) => setAnimalPicture(e.target.files![0])}
-                accept='image/png, image/jpeg'
+                accept="image/png, image/jpeg"
             />
 
             <img
@@ -91,22 +113,9 @@ const SidenavWrapper = () => {
                 alt="Animal"
             />
 
-          <button
-          onClick={()=>{
-            backendService.addReport(
-              {animalId:null,
-                eventId:null,
-                eventPhotos:animalPicture,
-                localization:LastTrackedPointProvider.getInstance(),
-                user:{userName:name,phone:telephone}
-
-            
-            })
-          }
-            
-          }>
-
-          </button>
+            <button onClick={handleSaveForm}>
+                Zapisz se kurde
+            </button>
         </div>
     );
 }
