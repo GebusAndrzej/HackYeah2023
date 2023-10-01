@@ -91,10 +91,22 @@ const SidenavWrapper = () => {
                 alt="Animal"
             />
 
-            <button
-            >
-                Dodaj Zgłoszenie
-            </button>
+          <button
+          onClick={()=>{
+            backendService.addReport(
+              {animalId:null,
+                eventId:null,
+                eventPhotos:animalPicture,
+                localization:LastTrackedPointProvider.getInstance(),
+                user:{userName:name,phone:telephone}
+
+            
+            })
+          }
+            
+          }>
+
+          </button>
         </div>
     );
 }
