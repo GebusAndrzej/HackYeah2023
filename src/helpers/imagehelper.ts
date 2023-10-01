@@ -7,7 +7,7 @@ export const base64ToBlob = (base64: string): Blob => {
     return new Blob([ fileBits ], { type: contentType });
 };
 
-export const getBase64 = (file: File) => new Promise((res, rej) => {
+export const getBase64 = (file: File): Promise<string> => new Promise((res, rej) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {

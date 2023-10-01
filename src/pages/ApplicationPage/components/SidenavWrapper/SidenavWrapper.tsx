@@ -74,8 +74,8 @@ const SidenavWrapper = () => {
 
             <p>Dodaj zwierze</p>
             <select required={true}
-                onSelect={(event) => {
-                    setCurrentAnimal(+event.currentTarget.value)
+                onChange={event => {
+                    +setCurrentAnimal(+event.currentTarget.value)
                 }}
                 placeholder="Nazwa zwierza"
             >
